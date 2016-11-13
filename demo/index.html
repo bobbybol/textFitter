@@ -3,10 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>BB Text Fitter Demo</title>
-        
-        <!-- Font Awesome -->
-        <!--<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
-        
+                
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="css/style.css">
         
@@ -17,21 +14,40 @@
             <h1 class="h1">BB Text Fitter</h1>
         </header>   
 
-        <div class="demoWrapper clearfix">
+        <div class="demoWrapper clearfix">          
             
-            <div class="demoContainer">
-                  
+            <!-- Regular fit -->
+            <div class="demoContainer">                
                 <div class="textContainer">
                     <p class="fit-regular">Some text that by default doesn't fit its parent container. This text at its regular size of 18px in fact exceeds the fixed height of the parent, but we can solve that by calling bbFitText().</p>
-                </div>
-                
+                </div>              
                 <p class="demoTitle">
                     Regular settings, only scaling down to fit height.
-                </p>
-                
-                <button class="demoButton">Text Fittie</button>
-                
+                </p>                
+                <button id="fit-regular" class="demoButton">Text Fittie</button>                
+            </div>            
+            
+            <!-- Align center -->
+            <div class="demoContainer">                
+                <div class="textContainer">
+                    <p class="align-center">Centered</p>
+                </div>              
+                <p class="demoTitle">
+                    Centering vertically & horizontally, <em>not</em> scaling up.
+                </p>                
+                <button id="align-center" class="demoButton">Text Fittie</button>                
             </div>
+            
+            <!-- Scaling up in width -->
+            <div class="demoContainer">                
+                <div class="textContainer">
+                    <p class="scale-up-width">Enlarged</p>
+                </div>              
+                <p class="demoTitle">
+                    Scaling <em>up</em> in width.<br><br>
+                </p>                
+                <button id="scale-up-width" class="demoButton">Text Fittie</button>                
+            </div> 
             
         </div>
 
@@ -52,9 +68,27 @@
 
         <!-- Call -->
         <script>
-            $('.fit-regular').bbFitText({
-                
+            $('#fit-regular').click(function() {
+                $('.fit-regular').bbFitText();
             });
+            
+            $('#align-center').click(function() {
+                $('.align-center').bbFitText({
+                    centerHorizontal    : true,
+                    centerVertical      : true
+                });
+            });
+            
+            $('#scale-up-width').click(function() {
+                $('.scale-up-width').bbFitText({
+                    centerHorizontal    : true,
+                    centerVertical      : true,
+                    scaleUpToo          : true
+                });
+            });
+            
+            
+            
         </script>
     </body>
 </html>
