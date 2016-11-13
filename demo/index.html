@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>BB Text Fitter Demo</title>
+        
+        <!-- Font Awesome -->
+        <!--<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+        
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        
+    </head>
+
+    <body>
+        <header class="main-header">
+            <h1 class="h1">BB Text Fitter</h1>
+        </header>   
+
+        <div class="demoWrapper clearfix">
+            
+            <div class="demoContainer">
+                  
+                <div class="textContainer">
+                    <p class="fit-regular">Some text that by default doesn't fit its parent container. This text at its regular size of 18px in fact exceeds the fixed height of the parent, but we can solve that by calling bbFitText().</p>
+                </div>
+                
+                <p class="demoTitle">
+                    Regular settings, only scaling down to fit height.
+                </p>
+                
+                <button class="demoButton">Text Fittie</button>
+                
+            </div>
+            
+        </div>
+
+        <div class="explanation-wrapper">
+            <div class="explanation-container">
+                <h2 class="h2">Fully customizable</h2>
+                <p class="p">Nori grape silver beet broccoli kombu beet greens fava bean potato quandong celery. Bunya nuts black-eyed pea prairie turnip leek lentil turnip greens parsnip. Sea lettuce lettuce water chestnut eggplant winter purslane fennel azuki bean earthnut pea sierra leone bologi leek soko chicory celtuce parsley salsify.
+
+                Celery quandong swiss chard chicory earthnut pea potato. Salsify taro catsear garlic gram celery bitterleaf wattle seed collard greens nori. Grape wattle seed kombu beetroot horseradish carrot squash brussels sprout chard.</p>
+            </div>
+        </div>
+
+        <!-- jQuery -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+        <!-- Plugin -->
+        <script src="js/jquery.bb-textfitter.js"></script>
+
+        <!-- Call -->
+        <script>
+            $('.fit-regular').bbFitText({
+                
+            });
+        </script>
+    </body>
+</html>
