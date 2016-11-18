@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>BB Text Fitter Banner Demo</title>
+        
+        <!-- Fonts -->
+        <link href="//fonts.googleapis.com/css?family=Gloria+Hallelujah|Josefin+Slab:300" rel="stylesheet"> 
+        
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/banner.css">
+        
+    </head>
+
+    <body>
+        
+        <button id="fittie">Fit Text</button>
+        
+        <button id="equalizie">Equalize Text</button>
+        
+        <!-- Banner Demo -->
+        <div class="stage">
+            <div class="fitAll">
+                <div class="fitOne">
+                    <p>Some text</p>
+                </div>
+                <div class="fitOne">
+                    <p>A little more text</p>
+                </div>
+                <div class="fitOne">
+                    <p>Some more text still ;)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+        <!-- Plugin -->
+        <script src="js/jquery.bb-textfitter.js"></script>
+
+        <!-- Call -->
+        <script>
+            $('#fittie').click(function() {
+                $('.fitOne p').bbFitText({
+                    scaleUpToo: 'true',
+                    centerVertical      : true,
+                    lineHeight: 1.1,
+                    forceSingleLine: true
+                });
+            });
+            
+            $('#equalizie').click(function() {
+                $('.fitOne p').bbEqualizeText();
+            });
+        </script>
+    </body>
+</html>

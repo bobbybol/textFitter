@@ -1,7 +1,7 @@
 /* jshint -W117 */
 
 /*!
- * BB Text Fitter 2.0.0
+ * BB Text Fitter 2.1.0
  * Uses binary search to fit text with minimal layout calls.
  * https://github.com/bobbybol/textFitter
  * @license MIT licensed
@@ -30,10 +30,10 @@
             lineHeight          : 1.2,      // line-height in em           
             // Text centering
             centerHorizontal    : false,    // center text horizontally or not
-            centerVertical      : false,    // center text vertically or not          
+            centerVertical      : false,    // center text vertically or not   
             // Extra options
             forceSingleLine     : false,    // force text onto single line
-            scaleUpToo          : false,    // possibility to scale text up too
+            scaleUpToo          : false,    // possibility to scale text up too            
         };        
         // Settings extendable with options
         $.extend(settings, options);
@@ -57,7 +57,7 @@
             var parentWidth         = parent.width();
             var originalHTML        = toFit.html();            
                 // var originalText        = toFit.text();      <-- not used in v2.0.0
-            var newSpan; 
+            var newSpan;
                 // var singleLineHeight;                        <-- not used in v2.0.0
                 // var multiLine;                               <-- not used in v2.0.0
             
@@ -188,10 +188,41 @@
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center"
-                });
-                
+                });  
             }
-               
-        });               
+            
+        });
     };
+    
+    
+    /**
+     * Defining the Plugin
+     */
+    
+    $.fn.bbEqualizeText = function() {
+        
+        // Find font size of passed element
+        function findFontSize(element) {
+            return parseInt($(element).css("fontSize"));
+        }
+        
+        // Compare values, return smallest number
+        function findSmallest(val1, val2) {
+            return val2 < val1 ? val2 : val1;
+        }
+        
+        // Get smallest font size
+        var smallestFontSize = this
+            .toArray()
+            .map(findFontSize)
+            .reduce(findSmallest)
+        ;
+        
+        // Assign smallest font size to every element
+        // ..and return object for chainability
+        return this.each(function() {
+            $(this).css("fontSize", smallestFontSize);
+        }); 
+    };   
+    
 }(jQuery));

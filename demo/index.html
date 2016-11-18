@@ -58,7 +58,7 @@
                     <p class="big-word">This text contains a very long and <span style="text-decoration: underline;">impressivelycomplicated</span> word, or perhaps we just forgot a space.</p>
                 </div>              
                 <p class="demoTitle">
-                    Perfect scaling of big words<br><br>
+                    Perfect scaling of big words.<br><br>
                 </p>                
                 <button id="big-word" class="demoButton">Text Fittie</button>                
             </div>
@@ -69,7 +69,7 @@
                     <p class="force-single-line">Force text on single line</p>
                 </div>              
                 <p class="demoTitle">
-                    Force text on fitted single line<br><br>
+                    Force text on fitted single line.<br><br>
                 </p>                
                 <button id="force-single-line" class="demoButton">Text Fittie</button>                
             </div>
@@ -80,7 +80,7 @@
                     <p class="line-height">Nice big line height</p>
                 </div>              
                 <p class="demoTitle">
-                    Set line height with em<br><br>
+                    Set line height with em.<br><br>
                 </p>                
                 <button id="line-height" class="demoButton">Text Fittie</button>                
             </div>
@@ -91,7 +91,7 @@
                     <p class="font-combination"><span style="font-family: 'Josefin Slab'; font-weight: 300;">Any combination of</span><span style="font-family: 'Gloria Hallelujah'; font-weight: 400;"> any number of fonts</span></p>
                 </div>              
                 <p class="demoTitle">
-                    Set line height with em<br><br>
+                    Set line height with em.<br><br>
                 </p>                
                 <button id="font-combination" class="demoButton">Text Fittie</button>                
             </div>
@@ -105,7 +105,45 @@
                     Put padding on parent with <br><em>box-sizing: border-box;</em>
                 </p>                
                 <button id="padding-too" class="demoButton">Text Fittie</button>                
-            </div> 
+            </div>
+            
+            <!-- Multiple -->
+            <div class="demoContainer">                
+                <div class="textContainer">
+                    <div class="fitOne">
+                        <p class="multiple">Some text</p>
+                    </div>
+                    <div class="fitOne">
+                        <p class="multiple">A little more text</p>
+                    </div>
+                    <div class="fitOne">
+                        <p class="multiple">Some more text still ;)</p>
+                    </div>
+                </div>              
+                <p class="demoTitle">
+                    It's possible to fit all your text nodes with just one call.
+                </p>                
+                <button id="multiple" class="demoButton">Text Fittie</button>                
+            </div>
+            
+            <!-- Equalize multiple -->
+            <div class="demoContainer">                
+                <div class="textContainer">
+                    <div class="fitOne">
+                        <p class="equalize">Some text</p>
+                    </div>
+                    <div class="fitOne">
+                        <p class="equalize">A little more text</p>
+                    </div>
+                    <div class="fitOne">
+                        <p class="equalize">Some more text still ;)</p>
+                    </div>
+                </div>              
+                <p class="demoTitle">
+                    It's also possible to equalize selected text nodes.
+                </p>                
+                <button id="equalize" class="demoButton">Text Fittie</button>                
+            </div>
             
         </div>
 
@@ -177,6 +215,24 @@
                     centerVertical      : true,
                     centerHorizontal    : true
                 });
+            });
+            
+            $('#multiple').click(function() {
+                $('.multiple').bbFitText({
+                    scaleUpToo          : 'true',
+                    centerVertical      : true,
+                    lineHeight          : 1.1,
+                    forceSingleLine     : true
+                });
+            });
+            
+            $('#equalize').click(function() {
+                $('.equalize').bbFitText({
+                    scaleUpToo          : 'true',
+                    centerVertical      : true,
+                    lineHeight          : 1.1,
+                    forceSingleLine     : true
+                }).bbEqualizeText();
             });
         </script>
     </body>

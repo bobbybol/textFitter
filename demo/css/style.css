@@ -124,6 +124,12 @@ button:focus {
     padding: 0;
 }
 
+.fitOne {
+    box-shadow: inset 0 0 10px rgba(0,0,0,.3);
+    padding: 5px;
+    height: 37px;
+    margin-bottom: 10px;
+}
 
 /**
  * Explanation

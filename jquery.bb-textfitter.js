@@ -1,5 +1,5 @@
 /*!
- * BB Text Fitter 2.0.0
+ * BB Text Fitter 2.1.0
  * Uses binary search to fit text with minimal layout calls.
  * https://github.com/bobbybol/textFitter
  * @license MIT licensed
@@ -28,10 +28,10 @@
             lineHeight          : 1.2,      // line-height in em           
             // Text centering
             centerHorizontal    : false,    // center text horizontally or not
-            centerVertical      : false,    // center text vertically or not          
+            centerVertical      : false,    // center text vertically or not   
             // Extra options
             forceSingleLine     : false,    // force text onto single line
-            scaleUpToo          : false,    // possibility to scale text up too
+            scaleUpToo          : false,    // possibility to scale text up too            
         };        
         // Settings extendable with options
         $.extend(settings, options);
@@ -54,10 +54,7 @@
             var parentHeight        = parent.height();
             var parentWidth         = parent.width();
             var originalHTML        = toFit.html();            
-                // var originalText        = toFit.text();      <-- not used in v2.0.0
-            var newSpan; 
-                // var singleLineHeight;                        <-- not used in v2.0.0
-                // var multiLine;                               <-- not used in v2.0.0
+            var newSpan;
             
             // For binary search algorithm
             var low;
@@ -80,28 +77,6 @@
                 // Otherwise just make a reference to the pre-existing span
                 newSpan = toFit.find('span.textfittie');
             }
-                       
-            /* v2.0.0 -- UNNECCESARY
-            =========================================================================
-            // Check for words that are too big to fit inside <p>
-            if (newSpan.width() > toFit.innerWidth()) {
-                // find longest word
-                var wordArray = originalText.split(" ");
-                console.log(wordArray);
-                
-                var longestWord = wordArray.reduce(function(longest, currentWord) {
-                    if(currentWord.length > longest.length)
-                        return currentWord;
-                    else
-                       return longest;
-                }, "");
-                
-                console.log(longestWord);
-                
-                newSpan.html(longestWord);
-            }
-            =========================================================================
-            */
             
             // Force single line
             if (settings.forceSingleLine) {
@@ -114,18 +89,7 @@
             toFit.css({
                 lineHeight: settings.lineHeight + "em"
             });
-                       
-            /* v2.0.0 -- UNNECCESARY
-            =======================================================================================
-            // Detect multiline
-            singleLineHeight = Math.round(parseInt(toFit.css("font-size")) * settings.lineHeight);
-            if (newSpan.height() > (singleLineHeight * 1.5)) {
-                multiLine = true;
-            } else {
-                multiLine = false;
-            }
-            =======================================================================================
-            */           
+         
             
             /**
              * Binary search for best fit
@@ -169,27 +133,45 @@
             
             // Vertical
             if (settings.centerVertical) {
-                
-                /* v2.0.0 -- FLEXBOX ONLY
-                ============================
-                parent.css({
-                    display: "table"
-                });
-                toFit.css({
-                    display: "table-cell",
-                    verticalAlign: "middle"
-                });
-                ============================
-                */
-                
                 parent.css({
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center"
-                });
-                
+                });  
             }
-               
-        });               
+            
+        });
     };
+    
+    
+    /**
+     * Defining the Plugin
+     */
+    
+    $.fn.bbEqualizeText = function() {
+        
+        // Find font size of passed element
+        function findFontSize(element) {
+            return parseInt($(element).css("fontSize"));
+        }
+        
+        // Compare values, return smallest number
+        function findSmallest(val1, val2) {
+            return val2 < val1 ? val2 : val1;
+        }
+        
+        // Get smallest font size
+        var smallestFontSize = this
+            .toArray()
+            .map(findFontSize)
+            .reduce(findSmallest)
+        ;
+        
+        // Assign smallest font size to every element
+        // ..and return object for chainability
+        return this.each(function() {
+            $(this).css("fontSize", smallestFontSize);
+        }); 
+    };   
+    
 }(jQuery));

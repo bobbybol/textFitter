@@ -1,0 +1,60 @@
+body{
+    margin: 0;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+    background-color: #2c2f38;
+    width: 336px;
+    height: 280px;
+}
+
+.clearfix:after {
+    content: " ";
+    display: block;
+    height: 0px;
+    clear: both;
+    visibility: hidden;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.2em;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+}
+
+button {
+    padding: 4px 12px;
+    margin: 10px 0 0 10px;
+    cursor: pointer;
+}
+
+.stage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -140px;
+    margin-left: -168px;
+    width: 336px;
+    height: 280px;
+    background: #fff;
+}
+
+.fitAll {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 168px;
+    height: 280px;
+    background-color: crimson;
+    font-size: 16px;
+    box-shadow: -6px 0 20px -1px rgba(0,0,0,.5);
+    padding: 30px 10px 0;
+    box-sizing: border-box;
+}
+
+.fitOne {
+    background-color: darkred;
+    padding: 5px;
+    height: 40px;
+    margin-bottom: 30px;
+}
