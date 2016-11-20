@@ -1,5 +1,5 @@
 # BB Text Fitter
-A JavaScript plugin to resize text in order to fit perfectly within its parent container.
+A JavaScript plugin to resize text in order to fit perfectly within its parent container.  
 Oh, and it's **_fast_** due to binary search algorithm awesomeness.
 
 ## Demo
@@ -64,4 +64,46 @@ $('.textContainer p').bbFitText({
 - Font size is measured in pixels, do not assume anything else.
 - Line height is measured in ems, so it scales nicely relative to font size.
 - Minimizing the range between `minFontSize` and `maxFontSize` will result in fewer search iterations, so improves performance.
+- Note that if you have multiple text elements that need to be fitted with the same settings, you can do so in one call. There's no need to instantiate the plugin on each text element individually:
+```html
+<div class="tc tc1">
+  <p>Paragraph 1</p>
+</div>
+<div class="tc tc2">
+  <p>Paragrahph 2</p>
+</div>
+<div class="tc tc3">
+  <p>Paragrahph 3</p>
+</div>
+```
+Only one call is needed:
+```javascript
+$('.tc p').bbFitText({
+  minFontSize: 10,
+  maxFontSize: 36,
+  lineHeight: 1.35
+});
+```
 - Issues have been know to arise from weird scaling settings on the `<body>`; if the plugin is executing but refusing to set put a pixel value on the `<p>` tag, check your `<body>` styling first for absolute `width` and `height`, wrong values for `line-height`, etc.
+
+## Equalizing multiple text nodes
+It might be necessary to first fit multiple text elements to their container, and subsequently equalize those text elements between themselves. This would effectively give them the same font size, which is often desirable from a design/layout point of view.
+The text fitter plugin provides you with a second plugin (yes a plugin within a plugin), called bbEqualizeText. You can use it like so:
+```html
+<div class="equalizeUs">
+  <p>Some text</p>
+</div>
+<div class="equalizeUs">
+  <p>A little more text</p>
+</div>
+<div class="equalizeUs">
+  <p>Some more text still</p>
+</div>
+```
+Fit the text, then equalize:
+```javascript
+$('.equalizeUs p').bbFitText({
+  centerVertical: true,
+  forceSingleLine: true
+}).bbEqualizeText();
+```
