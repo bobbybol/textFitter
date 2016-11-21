@@ -84,6 +84,14 @@ $('.tc p').bbFitText({
   lineHeight: 1.35
 });
 ```
+Or if you don't want to give an extra shared class to your elements:
+```javascript
+$('.tc1 p, .tc2 p, .tc3 p').bbFitText({
+  minFontSize: 10,
+  maxFontSize: 36,
+  lineHeight: 1.35
+});
+```
 - Issues have been know to arise from weird scaling settings on the `<body>`; if the plugin is executing but refusing to set put a pixel value on the `<p>` tag, check your `<body>` styling first for absolute `width` and `height`, wrong values for `line-height`, etc.
 
 ## Equalizing multiple text nodes
