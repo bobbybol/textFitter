@@ -1,4 +1,5 @@
 # BB Text Fitter
+**v2.2.0**  
 A JavaScript plugin to resize text in order to fit perfectly within its parent container.  
 Oh, and it's **_fast_** due to binary search algorithm awesomeness.
 
@@ -18,10 +19,11 @@ BB Text Fitter can:
 - account for padding
 - fit all your text nodes with one call
 - equalize font sizes between different text nodes
+- smartly choose to break words or leave them intact
 
 ## Basic Usage
 **HTML structure**  
-If you have need of this plugin, you probably have some container with at least one fixed dimension like width or height. You also most likely have some text that needs to fit this container, no matter how long this text could get. Alas, the Text Fitter plugin assumes that you have at least these two elements in place: a text element such as a `<p>` tag, and a container element which could be a `<div>` or some other element that you gave some dimensions:
+If you have need of this plugin, you probably have some container with at least one fixed dimension like width or height. You also most likely have some text that needs to fit within this container, no matter how long this text could get. Alas, the Text Fitter plugin assumes that you have at least these two elements in place: a text element such as a `<p>` tag, and a container element which could be a `<div>` or some other element that you gave some dimensions:
 ```html
 <div class="textContainer">
   <p>Some text you'd like to fit</p>
@@ -48,7 +50,10 @@ There's a number of `options` you can fiddle with, to get the desired result of 
      centerVertical        : false,        // center text vertically or not   
   
      forceSingleLine       : false,        // force text onto single line
-     scaleUpToo            : false,        // possibility to scale text up too  
+     scaleUpToo            : false,        // possibility to scale text up too
+     
+     smartBreak            : false,        // use smart break for long words
+     smartBreakCharacter   : '~'           // character to break a word on    
 }
 ```
 Note that you when implementing the plugin functionality, you only have to refer to the settings that you want different. An example of using some custom settings:
@@ -92,7 +97,7 @@ $('.tc1 p, .tc2 p, .tc3 p').bbFitText({
   lineHeight: 1.35
 });
 ```
-- Issues have been know to arise from weird scaling settings on the `<body>`; if the plugin is executing but refusing to set put a pixel value on the `<p>` tag, check your `<body>` styling first for absolute `width` and `height`, wrong values for `line-height`, etc.
+- Issues have been know to arise from weird scaling settings on the `<body>`; if the plugin is executing but refusing to put a pixel value on the `<p>` tag, check your `<body>` styling first for absolute `width` and `height`, wrong values for `line-height`, etc.
 
 ## Equalizing multiple text nodes
 It might be necessary to first fit multiple text elements to their container, and subsequently equalize those text elements between themselves. This would effectively give them the same font size, which is often desirable from a design/layout point of view.
@@ -115,3 +120,20 @@ $('.equalizeUs p').bbFitText({
   forceSingleLine: true
 }).bbEqualizeText();
 ```
+
+## Smart Word Break
+When setting `smartBreak` to `true`, you can now specify where long words would potentially be able to break if that would make the 'fit' look nicer. You can specify what character will be recognized as the `smartBreakCharacter`, and put that character at a smart place in the long word so that you control how a word could potentially be broken, not the browser. The default character is the 'tilda' sign `~`. As an example, `polyphilo~progenitive` would turn into either `polyphiloprogenitive` or `polyphilo-` with `progenitive` on the next line. The Smart Word Breaker makes sure that text doesn't get unneccessarily small due to the presence of overly long words. And it keeps you in control of the way these words might break.  
+Use:
+```html
+<div class="longWordsContainer">
+  <p>The old woman who lived in a shoe was quite polyphilo~progenitive, if we may believe Mother Goose.</p>
+</div>
+```
+Apply Text Fitter with Smart Word Break:
+```javascript
+$('.longWordsContainer p').bbFitText({
+  smartBreak: true,
+  smartBreakCharacter: '~'
+}).bbEqualizeText();
+```
+Smart Word Break is not limited to just one breakable word; you can specify smart breaks for as many words as you like.
