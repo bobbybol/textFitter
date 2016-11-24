@@ -1,5 +1,4 @@
-# BB Text Fitter
-**v2.2.0**  
+# BB Text Fitter - v2.2.0
 A JavaScript plugin to resize text in order to fit perfectly within its parent container.  
 Oh, and it's **_fast_** due to binary search algorithm awesomeness.
 
@@ -137,3 +136,20 @@ $('.longWordsContainer p').bbFitText({
 }).bbEqualizeText();
 ```
 Smart Word Break is not limited to just one breakable word; you can specify smart breaks for as many words as you like.
+
+## Changelog
+### 2.2.0
+#### Added
+- Smart Word Breaker functionality
+- Smartbreak character now configurable in options
+
+### 2.1.0
+#### Added
+- Text Equalizer plugin
+- Text Equalizer can be called seperately, after fitting
+
+### 2.0.0
+#### Added
+- New repository with completely rebuilt textfitter
+- Text Aligner included in main plugin
+- Upscaling is now optional
