@@ -28,6 +28,14 @@ If you have need of this plugin, you probably have some container with at least 
   <p>Some text you'd like to fit</p>
 </div>
 ```
+**Incorporating the plugin**  
+To start fitting text, you need the Text Fitter plugin to be available in your project. Download it [here](https://github.com/bobbybol/textFitter/archive/master.zip) from Github, and include it in your HTML like so:
+```html
+<!-- First include jQuery -->
+<script src="path-to/jquery.js"></script>
+<!-- Then include the textfitter plugin -->
+<script src="path-to-the-plugin/jquery.bb-textfitter.js"></script>
+```
 **Activating Text Fitter with JavaScript**  
 The most basic way of using Text Fitter is simply calling it on the `<p>` tag you wish to be fitted to its parent:
 ```javascript
