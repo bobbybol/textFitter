@@ -146,6 +146,10 @@ $('.longWordsContainer p').bbFitText({
 Smart Word Break is not limited to just one breakable word; you can specify smart breaks for as many words as you like.
 
 ## Changelog
+### 2.2.1
+#### Fixed
+- IE bug when vertically aligning and scaling up
+
 ### 2.2.0
 #### Added
 - Smart Word Breaker functionality
