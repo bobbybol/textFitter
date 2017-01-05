@@ -1,10 +1,10 @@
 /*!
- * BB Text Fitter 2.2.0
+ * BB Text Fitter 2.2.1
  * Uses binary search to fit text with minimal layout calls.
  * https://github.com/bobbybol/textFitter
  * @license MIT licensed
  *
- * Copyright (C) 2016 bobbybol.com - A project by Bobby Bol
+ * Copyright (C) 2017 bobbybol.com - A project by Bobby Bol
  * Thanks: @STRML - https://github.com/STRML
  */
 
@@ -194,35 +194,48 @@
             
             
             /**
-             * Call the fitter
+             * Function to call the fitter
              */
             
-            if(!settings.smartBreak || originalText.indexOf(settings.smartBreakCharacter) === -1 ) {
-                findBestFit(toFit);                
-            } else {                            
-                smartWordBreaker();
+            function fitIt() {
+                if(!settings.smartBreak || originalText.indexOf(settings.smartBreakCharacter) === -1 ) {
+                    findBestFit(toFit);                
+                } else {                            
+                    smartWordBreaker();
+                }
             }
-
+            
             
             /**
-             * Alignment to center
+             * Function to align to center
              */
             
-            // Horizontal
-            if (settings.centerHorizontal) {
-                toFit.css({
-                    textAlign: "center"
-                });
+            function alignIt() {
+                // Horizontal
+                if (settings.centerHorizontal) {
+                    toFit.css({
+                        textAlign: "center"
+                    });
+                }
+
+                // Vertical
+                if (settings.centerVertical) {            
+                    setTimeout(function() {
+                        parent.css({
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center"
+                        });
+                    }, 10);
+                }
             }
             
-            // Vertical
-            if (settings.centerVertical) {            
-                parent.css({
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center"
-                });  
-            }
+            
+            /**
+             * Resolve `fit` promise before aligning
+             */
+            
+            $.when( fitIt() ).done( alignIt() );
             
         });
     };
