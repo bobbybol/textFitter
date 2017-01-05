@@ -1,4 +1,4 @@
-# BB Text Fitter - v2.2.0
+# BB Text Fitter - v2.2.1
 A JavaScript plugin to resize text in order to fit perfectly within its parent container.  
 Oh, and it's **_fast_** due to binary search algorithm awesomeness.
 
