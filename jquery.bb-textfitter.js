@@ -1,10 +1,12 @@
+/* jshint -W117 */
+
 /*!
- * BB Text Fitter 2.2.1
+ * BB Text Fitter 2.2.2
  * Uses binary search to fit text with minimal layout calls.
  * https://github.com/bobbybol/textFitter
  * @license MIT licensed
  *
- * Copyright (C) 2017 bobbybol.com - A project by Bobby Bol
+ * Copyright (C) 2018 bobbybol.com - A project by Bobby Bol
  * Thanks: @STRML - https://github.com/STRML
  */
 
@@ -127,12 +129,10 @@
              * Smart word break
              */
             
-            function smartWordBreaker() {
-                // Locally scoped version of the HTML                     
+            function smartWordBreaker() {  
+                
+                // Locally scoped version of the HTML
                 var smartHTML = originalHTML;
-                // Font sizes to compare after respective fits
-                var fontsizeIntact;
-                var fontsizeBroken;
                 
                 // Save an array of all words
                 var longWordArray = originalText
@@ -148,48 +148,88 @@
                     var splitWord = longword.split(settings.smartBreakCharacter);
                     
                     return {
-                        longwordOriginal : longword,
                         longwordBroken   : splitWord.join("- "),
                         longwordIntact   : splitWord.join("")
                     };
-                });     
+                });
+                       
+                // We want to create an array of all possible combinations of smartwords,
+                // including when they're all intact and where they're all broken
+                /*[
+                    ['1n', '2n', '3n'],
+                    ['1y', '2n', '3n'],
+                    ['1y', '2y', '3n'],
+                    ['1y', '2n', '3y'],
+                    ['1y', '2y', '3y'],
+                    ['1n', '2y', '3n'],
+                    ['1n', '2y', '3y'],
+                    ['1n', '2n', '3y'],
+                ]*/
                 
-                // Build array of smartWordBreak <span>s
-                objectArray.forEach(function(object) {
-                    var lwOriginal  = object.longwordOriginal;
-                    var lwBroken    = '<span class="smartWordBreak">' + object.longwordBroken + '</span>';
-
-                    smartHTML = smartHTML.replace( lwOriginal , lwBroken );
+                function createAllCombinations(arr) {
+                    var i, j, temp;
+                    var result = [];
+                    var arrLen = arr.length;
+                    var power = Math.pow;
+                    var combinations = power(2, arrLen);
+                    
+                    // Time & Space Complexity O (n * 2^n)
+                    for(i = 0; i < combinations; i++) {
+                        temp = [];
+                        
+                        for(j = 0; j < arrLen; j++) {
+                            // & is bitwise AND
+                            if((i & power(2, j))) {
+                                temp.push(arr[j].longwordBroken);
+                            } else {
+                                temp.push(arr[j].longwordIntact);
+                            }
+                        }
+                        result.push(temp);
+                    }
+                    return result;
+                }
+                
+                var combiArray = createAllCombinations(objectArray);
+                
+                // In the DOM, we want to get rid of all original words and replace them with <span>s.                
+                longWordArray.forEach(function(el) {
+                    smartHTML = smartHTML.replace(el, '<span class="smartWordBreak"></span>');
                 });
                 
-                // Replace old HTML with smartHTML
                 newSpan.html(smartHTML);
-   
-                // Get a reference to all smart words
+
+                // Now we want to get a new reference to those <span>s so we can start replacing words and testing for font-size
                 var allSmartWords = newSpan.find('.smartWordBreak');
 
-                // We have to do a wordbreak-check with a double textfit for each smart word
-                objectArray.forEach(function(object, index) {
-                    // FIT #1
-                    // First fit is with word broken
+                var cachedFontSizes = [];
+                
+                // We have to do a wordbreak-check for every possible combination
+                combiArray.forEach(function(arr, index) {
+                    // Replace all words
+                    arr.forEach(function(word, index){
+                        $(allSmartWords[index]).text(word);
+                    });
+                    // Fit
                     findBestFit(toFit);
-                    // And store font-size
-                    fontsizeBroken = toFit.css('font-size');
-                    
-                    // FIT #2
-                    // Find [i-th] wordBroken and replace with wordIntact
-                    $(allSmartWords[index]).text(object.longwordIntact);
-                    // Fit again
-                    findBestFit(toFit);
-                    // And store font-size
-                    fontsizeIntact = toFit.css('font-size');
-                    
-                    // FIT #3
-                    if (fontsizeBroken > fontsizeIntact) {
-                        $(allSmartWords[index]).text(object.longwordBroken);
-                        findBestFit(toFit);
-                    }
+                    // Store the font size
+                    cachedFontSizes.push(
+                        parseInt(toFit.css('font-size').split('px')[0])
+                    );
                 });
+
+                // Now we get the first occurence of the largest font size,
+                // which is our `best fit` (least broken words).
+                var largest = cachedFontSizes.reduce(function(a, b) {
+                    return Math.max(a, b);
+                });
+                var firstIndexOfLargest = cachedFontSizes.indexOf(largest);
+
+                // And finally, we use that fit one final time
+                combiArray[firstIndexOfLargest].forEach(function(word, index){
+                    $(allSmartWords[index]).text(word);
+                });
+                findBestFit(toFit);
             }
             
             

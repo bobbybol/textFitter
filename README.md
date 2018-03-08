@@ -1,4 +1,4 @@
-# BB Text Fitter - v2.2.1
+# BB Text Fitter - v2.2.2
 A JavaScript plugin to resize text in order to fit perfectly within its parent container.  
 Oh, and it's **_fast_** due to binary search algorithm awesomeness.
 
@@ -146,6 +146,10 @@ $('.longWordsContainer p').bbFitText({
 Smart Word Break is not limited to just one breakable word; you can specify smart breaks for as many words as you like.
 
 ## Changelog
+### 2.2.2
+#### Added
+- Smart Word Breaker can now check optimal fit for multiple smartbreak words 
+
 ### 2.2.1
 #### Fixed
 - IE bug when vertically aligning and scaling up
